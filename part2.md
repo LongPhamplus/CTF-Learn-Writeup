@@ -43,3 +43,73 @@
 
     ```
 ![Riyadh1](https://github.com/LongPhamplus/CTF-Learn-Writeup/blob/master/Part2_pic/Riyadh1.png)
+
+<details><summary>Đoạn mã chuyển đổi cho dễ đọc để tham khảo</summary>
+<p>
+```
+# I wrote and debugged this code with all the convoluted "EAT" variable names.
+# Was it confusing? Yes. Was debugging hard? Yes.
+# Did I spend more time than I should have on this problem? Yes
+
+toInt = int
+sizeOfString = len
+toString = str
+checkCharNotNum = toString.isdigit # kiem tra xem ATE co chua ki tu khac so hay khong
+
+def Eating(eat):
+    return toString(toInt(eat)*roundLen3) #chuyen so eat thanh so roi nhan voi roundLen3 roi chuyen ket qua thanh string
+
+def EAt(eat, eats):
+    print(eat, eats)
+    eat1 = 0
+    eat2 = 0
+    i = 0
+    eAt = ""
+    while eat1 < sizeOfString(eat) and eat2 < sizeOfString(eats):
+        if i%roundLen3 == roundLen3Sub1//roundLen3Plus1: # i%3 == 0:
+            eAt += eats[eat2]
+            eat2 += 1
+        else:
+            eAt += eat[eat1]
+            eat1 += 1
+        i += 1
+    return eAt
+
+def reverse(eat):
+    return eat[::roundLen3-roundLen3Plus1]  # cat xau voi buoc nhay -1 hay co the hieu la dao xau
+
+def eaT(eat):
+    return Eating(eat[:roundLen3]) + reverse(eat) # Eating(eat[:3]) + reverse(eat)
+
+def aTE(eat):
+    return eat
+	# Lap lai xau sizeOfString(eat) lan
+def Ate(eat):
+    return "Eat" + toString(sizeOfString(eat)) + eat[:roundLen3] # "Eat" + toString(9) + eat[:3]
+
+def Eat(eat):
+    if sizeOfString(eat) == 9: #checkCharNotNum(eat[:3]) 
+        if checkCharNotNum(eat[:roundLen3]) and\
+            checkCharNotNum(eat[sizeOfString(eat)-roundLen3+1:]): # checkCharNotNum(eat[7:])
+                eateat = EAt(eaT(eat), Ate(aTE(reverse(eat))))
+                if eateat == "E10a23t9090t9ae0140":
+                    flag = "eaten_" + eat
+                    print("absolutely EATEN!!! CTFlearn{",flag,"}")
+                else:
+                    print("thats not the answer. you formatted it fine tho, here's what you got\n>>", eateat)
+        else:
+            print("thats not the answer. bad format :(\
+            \n(hint: 123abc456 is an example of good format)")
+    else:
+        print("thats not the answer. bad length :(")
+
+print("what's the answer")
+eat = input()
+roundLen3 = sizeOfString(eat)//3 	# Lay kich thuoc string roi chia 3 lay phan nguyen
+roundLen3Plus1 = roundLen3+1
+roundLen3Sub1 = roundLen3-1
+Eat(eat)
+
+```
+</p>
+</details>
