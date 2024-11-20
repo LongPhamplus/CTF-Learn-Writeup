@@ -47,9 +47,6 @@
 <details>
 	<summary>Đoạn mã chuyển đổi cho dễ đọc để tham khảo</summary>
 ```
-	# I wrote and debugged this code with all the convoluted "EAT" variable names.
-	# Was it confusing? Yes. Was debugging hard? Yes.
-	# Did I spend more time than I should have on this problem? Yes
 	
 	toInt = int
 	sizeOfString = len
@@ -66,13 +63,13 @@
 	    i = 0
 	    eAt = ""
 	    while eat1 < sizeOfString(eat) and eat2 < sizeOfString(eats):
-	        if i%roundLen3 == roundLen3Sub1//roundLen3Plus1: # i%3 == 0:
-	            eAt += eats[eat2]
-	            eat2 += 1
-	        else:
-	            eAt += eat[eat1]
-	            eat1 += 1
-	        i += 1
+		if i%roundLen3 == roundLen3Sub1//roundLen3Plus1: # i%3 == 0:
+		    eAt += eats[eat2]
+		    eat2 += 1
+		else:
+		    eAt += eat[eat1]
+		    eat1 += 1
+		i += 1
 	    return eAt
 	
 	def reverse(eat):
@@ -89,19 +86,19 @@
 	
 	def Eat(eat):
 	    if sizeOfString(eat) == 9: #checkCharNotNum(eat[:3]) 
-	        if checkCharNotNum(eat[:roundLen3]) and\
-	            checkCharNotNum(eat[sizeOfString(eat)-roundLen3+1:]): # checkCharNotNum(eat[7:])
-	                eateat = EAt(eaT(eat), Ate(aTE(reverse(eat))))
-	                if eateat == "E10a23t9090t9ae0140":
-	                    flag = "eaten_" + eat
-	                    print("absolutely EATEN!!! CTFlearn{",flag,"}")
-	                else:
-	                    print("thats not the answer. you formatted it fine tho, here's what you got\n>>", eateat)
-	        else:
-	            print("thats not the answer. bad format :(\
-	            \n(hint: 123abc456 is an example of good format)")
+		if checkCharNotNum(eat[:roundLen3]) and\
+		    checkCharNotNum(eat[sizeOfString(eat)-roundLen3+1:]): # checkCharNotNum(eat[7:])
+			eateat = EAt(eaT(eat), Ate(aTE(reverse(eat))))
+			if eateat == "E10a23t9090t9ae0140":
+			    flag = "eaten_" + eat
+			    print("absolutely EATEN!!! CTFlearn{",flag,"}")
+			else:
+			    print("thats not the answer. you formatted it fine tho, here's what you got\n>>", eateat)
+		else:
+		    print("thats not the answer. bad format :(\
+		    \n(hint: 123abc456 is an example of good format)")
 	    else:
-	        print("thats not the answer. bad length :(")
+		print("thats not the answer. bad length :(")
 	
 	print("what's the answer")
 	eat = input()
@@ -110,4 +107,3 @@
 	roundLen3Sub1 = roundLen3-1
 	Eat(eat)
 ```
-</details>
