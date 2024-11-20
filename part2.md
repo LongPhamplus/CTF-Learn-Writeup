@@ -44,6 +44,8 @@
     ```
 ![Riyadh1](https://github.com/LongPhamplus/CTF-Learn-Writeup/blob/master/Part2_pic/Riyadh1.png)
 
+## Time to Eat
+- Đọc code để hiểu và tìm ra flag
 <details>
 	<summary>Đoạn mã chuyển đổi cho dễ đọc để tham khảo</summary>
 	
