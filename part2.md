@@ -52,7 +52,7 @@
 	toInt = int
 	sizeOfString = len
 	toString = str
-	checkCharNotNum = toString.isdigit # kiem tra xem ATE co chua ki tu khac so hay khong
+	checkCharNotNum = toString.isdigit # kiem tra xem xau co chua ki tu khac so hay khong
 	
 	def Eating(eat):
 	    return toString(toInt(eat)*roundLen3) #chuyen so eat thanh so roi nhan voi roundLen3 roi chuyen ket qua thanh string
