@@ -46,7 +46,6 @@
 
 <details>
 	<summary>Đoạn mã chuyển đổi cho dễ đọc để tham khảo</summary>
-```
 	
 	toInt = int
 	sizeOfString = len
@@ -106,4 +105,4 @@
 	roundLen3Plus1 = roundLen3+1
 	roundLen3Sub1 = roundLen3-1
 	Eat(eat)
-```
+ </details>
