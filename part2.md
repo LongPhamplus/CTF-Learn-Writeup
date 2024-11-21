@@ -119,7 +119,8 @@
 
 ## Python Reversal
 - Cố gắng đọc code để hiểu hoặc dùng đoạn mã tham khảo dưới:
-  <details>
+<details>
+	<sumary>Đoạn mã tham khảo (Python)</sumary>
 	import base64
 	import base64 as rtfd
 	import webbrowser
@@ -181,4 +182,4 @@
 	encodeString = decodeCrypt(encodeString)
 	encodeString = deObfuscate(encodeString)
 	print(encodeString)
-  </details>
+</details>
