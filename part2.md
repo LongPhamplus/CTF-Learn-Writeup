@@ -209,7 +209,7 @@
   </details>
 
 
-##Brute Force is Fun!
+## Brute Force is Fun!
 - Ở bài này thì khi tải file về sẽ là 1 cái ảnh mà đề gợi ý là brute force thì chắc flag sẽ ko phải nằm trên bức ảnh rồi.
 - Đầu tiên ta sẽ thử binwalk ra thì thấy tùm lum file :)) chả đâu vào đâu nhưng khi unzip file `1926.zip` thì lại yêu cầu mật khẩu vậy là brute force ở đây rồi.
 - Ta sẽ sử dụng JohnTheRipper để bruteforce cái này.
