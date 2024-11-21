@@ -112,6 +112,6 @@
 
 ## Music To My Ears
 - File tải về khi mở lên thì sẽ bị lỗi là không mở được. Thường những trường hợp như này thì ta sẽ xem xét phần header của file là biết ngay.
-- Rồi thì phần header khi mở sẽ trông nhử này: `filetypeM4A`
+- Rồi phần header khi mở sẽ trông nhử này: `filetypeM4A`
 - Thì đúng ra file m4a sẽ cần có header như này: `ftypM4A` hay dạng hex sẽ là `00 00 00 18 66 74 79 70 4D 34 41 20 00 00 20 00`.
 - Đó chỉ cần sửa lại thì file sẽ chạy được thôi. Lưu ý là cần bỏ 4 byte đầu tiên ở dòng 2 tức là khoảng trắng sau phần `M4A`.
