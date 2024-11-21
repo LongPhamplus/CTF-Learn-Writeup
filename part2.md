@@ -207,3 +207,39 @@
   		print(chr(i ^ 1337), end='')
   
   </details>
+
+
+##Brute Force is Fun!
+- Ở bài này thì khi tải file về sẽ là 1 cái ảnh mà đề gợi ý là brute force thì chắc flag sẽ ko phải nằm trên bức ảnh rồi.
+- Đầu tiên ta sẽ thử binwalk ra thì thấy tùm lum file :)) chả đâu vào đâu nhưng khi unzip file `1926.zip` thì lại yêu cầu mật khẩu vậy là brute force ở đây rồi.
+- Ta sẽ sử dụng JohnTheRipper để bruteforce cái này.
+- Đầu tiên thì cần tạo 1 wordlist đã. Để có được wordlist này thì ta cần tìm bên trong folder có tên là `folders` thì trong đường dẫn `_legotroopers.jpg.extracted/folders/73/43/` và `_legotroopers.jpg.extracted/folders/73/47/` sẽ chứa 1 file tên là p và có nội dung là:
+	```
+ 	Hmmm... almost!
+	The password is: "ctflag*****" where * is a number.
+	Encrypt the password using MD5 and compare it to the given hash!
+	As I said, you're gonna have to brute force the password!
+	Good luck! :)
+ 	```
+- Đó và ta sẽ có được wordlist dạng ctflag*****. Có thể dùng đoạn mã dưới đây để tạo:
+<details>
+	<summary>Đây là đoạn mã tham khảo (python)</summary>
+
+ 	import itertools
+
+	def save_ctflag_to_file(filename):
+	    digits = '0123456789'
+	    combinations = itertools.product(digits, repeat=5)
+	    
+	    with open(filename, 'w') as f:
+	        for combo in combinations:
+	            f.write('ctflag' + ''.join(combo) + '\n')
+	
+	# Lưu vào file ctflags.txt
+	save_ctflag_to_file('ctflags.txt')
+
+</details>
+
+- Gòi có wordlist thì sẽ dùng john thôi: `zip2john 1926.zip > hash ` và rồi `john hash --wordlist=ctflags.txt` đó và ta sẽ có pass chính là `ctflag48625` dùng pass này để unzip 1926.zip thì ta sẽ có 1 file flag và base64 nội dung file là có flag.
+
+## 
