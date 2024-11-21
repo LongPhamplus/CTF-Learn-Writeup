@@ -184,3 +184,26 @@
 	encodeString = deObfuscate(encodeString)
 	print(encodeString)
 </details>
+
+
+## Weird Android Calculator
+- Đã từng có 1 bài kiểu này ròi và khá là đơn giản :)).
+- Đầu tiên thì tải file về nếu bạn muốn tải về bằng điện thoại ròi chạy cũng được :)) mình cũng chưa có thử còn ở đây ta sẽ cho vào 1 cái decompiler để xem mã nguồn.
+- Chú ý thì ở trong đường dẫn `WeirdCalculator.apk sources de vidar weirdcalculator Parser.java` ta sẽ thấy được 1 dòng khá đáng ngờ là
+  ```
+  if (v > 100.0d) {
+	for (int i : new int[]{1407, 1397, 1400, 1406, 1346, 1400, 1385, 1394, 1382, 1293, 1367, 1368, 1365, 1344, 1354, 1288, 1354, 1382, 1288, 1354, 1382, 1355, 1293, 1357, 1361, 1290, 1355, 1382, 1290, 1368, 1354, 1344, 1382, 1288, 1354, 1367, 1357, 1382, 1288, 1357, 1348}) {
+	    Log.d("OUTPUT", Integer.toString(i ^ 1337));
+	}
+  }
+  return v;
+  ```
+- Lấy dữ liệu đem đi xor thì ta sẽ ra được flag.
+  <details>
+	  <summary>Đoạn mã tham khảo (python)</summary>
+
+	  a = [1407, 1397, 1400, 1406, 1346, 1400, 1385, 1394, 1382, 1293, 1367, 1368, 1365, 1344, 1354, 1288, 1354, 1382, 1288, 1354, 1382, 1355, 1293, 1357, 1361, 1290, 1355, 1382, 1290, 1368, 1354, 1344, 1382, 1288, 1354, 1367, 1357, 1382, 1288, 1357, 1348]
+	  for i in a:
+  		print(chr(i ^ 1337), end='')
+  
+  </details>
