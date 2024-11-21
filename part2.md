@@ -121,6 +121,7 @@
 - Cố gắng đọc code để hiểu hoặc dùng đoạn mã tham khảo dưới:
 <details>
 	<summary>Đoạn mã tham khảo (Python)</summary>
+	
 	import base64
 	import base64 as rtfd
 	import webbrowser
