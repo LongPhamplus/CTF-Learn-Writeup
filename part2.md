@@ -120,7 +120,7 @@
 ## Python Reversal
 - Cố gắng đọc code để hiểu hoặc dùng đoạn mã tham khảo dưới:
 <details>
-	<sumary>Đoạn mã tham khảo (Python)</sumary>
+	<summary>Đoạn mã tham khảo (Python)</summary>
 	import base64
 	import base64 as rtfd
 	import webbrowser
