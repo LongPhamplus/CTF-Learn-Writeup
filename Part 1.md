@@ -624,4 +624,3 @@ cái mà mình upload lên sẽ có tên là file, thử vào ta được `super
 - Dọc code thì ta thấy được là bài này sẽ cần nhập tổng số dương để ra 1 số âm vậy chỉ cần làm tràn số thôi :)).
 - Chạy `nc rivit.dev 10009` rồi nhập số lớn nhất của int rồi cộng 1 là ra.
 
-## Grid it
