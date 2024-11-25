@@ -333,3 +333,5 @@
  openssl enc -d -aes-256-cbc -iv $(cat iv) -K $(cat key) -in flag.enc -out flag -base64
  ```
 - Flag sẽ được ghi vào bên trong file flag.
+
+## Grid it
