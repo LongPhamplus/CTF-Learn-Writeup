@@ -308,3 +308,28 @@
 	                                                           sys.exit()
 	main()
 </details>
+
+## The Keymaker
+- Sau khi tải ảnh về và strings ta sẽ nhận được 1 đoạn kí tự khá là lạ đó là:
+  ```
+	b3BlbnNzbCBlbmMgLWQgLWFlcy0yNTYtY2JjIC1pdiBTT0YwIC1LIFNPUyAtaW4gZmxhZy5lbmMg
+	LW91dCBmbGFnIC1iYXNlNjQKCml2IGRvZXMgbm90IGluY2x1ZGUgdGhlIG1hcmtlciBvciBsZW5n
+	dGggb2YgU09GMAoKa2V5IGRvZXMgbm90IGluY2x1ZGUgdGhlIFMwUyBtYXJrZXIKCg==
+	CmmtaSHhAsK9pLMepyFDl37UTXQT0CMltZk7+4Kaa1svo5vqb6JuczUqQGFJYiycY
+  ```
+- Để ý 3 dòng trên kết thúc bởi == thì ta biết được sẽ phải dùng base64 ròi và decode ra ta có cái này:
+  ```
+  openssl enc -d -aes-256-cbc -iv SOF0 -K SOS -in flag.enc -out flag -base64
+
+  iv does not include the marker or length of SOF0
+
+  key does not include the S0S marker
+
+  ```
+- Ok giờ thì đơn giản hơn rồi chỉ cần dùng đoạn mã trên thôi với flag.enc có nội dung là dòng tứu 4 của phần trả về sau khi strings.
+- Nhưng cần phải biết iv và key là gì đã. Trong hệ mât aes-256-cbc thì iv sẽ có độ dài là 128 bit hay 16 bytes và key sẽ là 256 bits hay 32 btyes. Mở hexeditor của bạn lên tìm 2 phần bắt đầu của SOS và SOF0, có thể dùng imhex cho dễ hoặc 1 cái tool nào đó và cần biết về jpeg format nhé.
+- Có các giá trị iv và key thì có thể tạo 2 file iv và key và dùng lệnh:
+ ```
+ openssl enc -d -aes-256-cbc -iv $(cat iv) -K $(cat key) -in flag.enc -out flag -base64
+ ```
+- Flag sẽ được ghi vào bên trong file flag.
