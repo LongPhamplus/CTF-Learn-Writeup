@@ -370,3 +370,27 @@
 - Đoạn mã trên đại loại sẽ lấy giá trị đầu tiên trong các tên bảng và kiểm tra kí tự đầu tiên của tên đó nếu đúng thì sẽ delay khá lâu và nếu sai thì sẽ không có sự delay nào ở đây cả. Và từ đó là ta đã đi vào Blind SQL Injection rồi :D.
 - Giờ thì chỉ cần dùng tìm kiếm nhị phân tìm ra tên bảng rồi sau đó thay đổi câu lệnh sql tìm ra cột trong bảng và các giá trị có trong bảng thôi.
 - Vì tới thời điểm hiện tại bài đã được tải lên khá lâu rồi nên DB sẽ có nhiều dữ liệu rác nên có thể công cuộc tìm kiếm sẽ khá là khó vậy nên có thể gợi ý cho bạn là sẽ có 2 bảng chính là user và point, bảng user sẽ có username và password. Lần ra password qua username là admin và sẽ có 1 mã hash bằng md5. Dùng 1 tool để decrypt mã hash ra là sẽ có pass của admin, đăng nhập vào là sẽ được flag. (nội dung flag chả liên quan gì tới bài ._. ).
+
+
+## Blackbox
+- Sau khi chạy câu lệnh thì ta sẽ được điều khiển 1 máy ảo và quyền siêu hạn chế. Việc duy nhất có thể làm đó là chạy file blackbox . hết.
+- Ok với câu hỏi 1 + 1 bằng mấy thì ai chả biết bằng 2 nhưng mà nhập số mấy thì nó vẫn ra là `No dummy... 1 + 1 != 0...` clm.
+- Ròi giờ ta sẽ thử thêm một giá trị siêu siêu lớn để tràn kiểu long long hay int xem như nào ví dụ như là '99999999999999999999999999999999999999999999999999999999999'. Hmmmmm cũng không được vậy thử in ra 1 chuỗi kí tự siêu lớn xem tại có thể đoạn mã ko lưu input là 1 số rồi. Có thể nhập tay hoặc dùng python nhé:
+```
+    python3 -c 'print("A"*99 + chr(0x02))' | ./blackbox
+```
+- Ố ồ ta có gì đây lỗi bufer overflow :
+```
+    blackbox@ubuntu-512mb-nyc3-01:~$ python3 -c 'print("A"*99 + chr(0x02))' | ./blackbox
+    What is 1 + 1 = No dummy... 1 + 1 != 1094795585...
+    *** stack smashing detected ***: <unknown> terminated
+
+    [10]+  Stopped                 python3 -c 'print("A"*99 + chr(0x02))' | ./blackbox
+
+```
+- Ngon giờ có 1 gợi ý là input sẽ có dạng là `input[n]` với n là số kí tự được cho sẵn. Sau khi thử vài lần thì với giá trị n = 80 sẽ không bị tràn nữa hay n = 80.
+- Nhưng khi thay n = 81, 82, 83 thì lại ra các giá trị tương ứng là 65, 16705, 4276545. Chú ý thì đây chính là giá trị hex chuyển qua dec của 0xA, 0xAA, 0xAAA và ở đó sẽ lưu lại cái đáp án của mình. Tức là cái giá trị bị overflow sẽ là chỗ mà mình cần ghi câu trả lời.
+- Chỉ cần dùng đoạn mã dưới đây là xong:
+```
+    python3 -c 'print("A"*80 + chr(0x02))' | ./blackbox
+```
