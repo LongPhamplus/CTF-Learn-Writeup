@@ -388,7 +388,7 @@
     [10]+  Stopped                 python3 -c 'print("A"*99 + chr(0x02))' | ./blackbox
 
 ```
-- Ngon giờ có 1 gợi ý là input sẽ có dạng là `input[n]` với n là số kí tự được cho sẵn. Sau khi thử vài lần thì với giá trị n = 80 sẽ không bị tràn nữa hay n = 80.
+- Ngon giờ có 1 gợi ý là input sẽ có dạng là `input[n]` với n là số kí tự được cho sẵn. Sau khi thử vài lần thì với giá trị n = 80 sẽ không bị tràn nữa.
 - Nhưng khi thay n = 81, 82, 83 thì lại ra các giá trị tương ứng là 65, 16705, 4276545. Chú ý thì đây chính là giá trị hex chuyển qua dec của 0xA, 0xAA, 0xAAA và ở đó sẽ lưu lại cái đáp án của mình. Tức là cái giá trị bị overflow sẽ là chỗ mà mình cần ghi câu trả lời.
 - Chỉ cần dùng đoạn mã dưới đây là xong:
 ```
