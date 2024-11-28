@@ -483,4 +483,42 @@
 - Ở bài này khi mà kiểm tra trong phần strings thì sẽ thấy được có 1 phân gợi ý `data:image/png;base64` tức là đoạn kí tự sau đó sẽ là 1 đoạn hex bị encode bởi base64 của 1 file png giờ chỉ cần decode từ base63 ra chuyển qua hex rồi render ảnh là xong.
   ![Get Into Command Mission1](https://github.com/LongPhamplus/CTF-Learn-Writeup/blob/master/Part2_pic/Get%20Into%20Command%20Mission1.png)
 
-  
+## The Adventures of Boris Ivanov Part 2
+- Ghép ảnh vào hết là ra rồi chuyển hex thành text.
+<details>
+	<summary>Đoạn mã tham khảo (python)</summary>
+	
+	from PIL import Image
+	import os
+	
+	# Đường dẫn tới thư mục chứa các ảnh
+	image_folder = "./pic"  # Đổi thành đường dẫn thư mục chứa các ảnh của bạn
+	
+	# Lấy tất cả các file ảnh từ thư mục
+	image_files = [f for f in os.listdir(image_folder) if f.endswith('.png') or f.endswith('.jpg')]
+	
+	# Kiểm tra số lượng ảnh có đúng không
+	if len(image_files) == 0:
+	    raise ValueError("No images found in the specified directory.")
+	
+	# Mở tất cả ảnh và tính toán tổng chiều cao (vì ảnh đã có cùng chiều rộng và chiều cao)
+	images = [Image.open(os.path.join(image_folder, image_file)) for image_file in image_files]
+	
+	# Tổng chiều cao của tất cả các ảnh
+	total_height = sum(img.height for img in images)
+	width = images[0].width  # Vì tất cả ảnh có cùng chiều rộng
+	
+	# Tạo một ảnh mới với chiều rộng và chiều cao tổng hợp
+	result_image = Image.new('RGB', (width, total_height))
+	
+	# Dán tất cả ảnh vào ảnh mới theo chiều dọc
+	y_offset = 0
+	for img in images:
+	    result_image.paste(img, (0, y_offset))
+	    y_offset += img.height
+	
+	# Lưu ảnh kết quả
+	result_image.save("combined_image_vertical.png")
+	result_image.show()
+
+</details>
