@@ -459,13 +459,13 @@
 - Với file zip ban đầu ta sẽ có thể có 2 file 1 file pdf và 1 file text. Mình biết rõ là file pdf bị lỗi rồi nhưng mà không tài nào sửa lại được vậy thì thử nhìn qua file txt.
 - Kiểm tra qua lại thì thấy được là 2 file này có cùng kích thước vậy khả năng cao là phải ghép 2 file này lại để tạo ra 1 file mới rồi.
 - Có thể tham khảo đoạn mã dưới đây hoặc dùng bất kì công cụ nào có thể.
-  <details>
+<details>
 	<summary>Đoạn mã tham khảo (python)</summary>
 
 	with open('CTFLearn.pdf', 'rb') as file1:
 	content1 = file1.read()
 	with open('CTFLearn.txt', 'rb') as file2:
-	content2 = file2.read()
+		content2 = file2.read()
 	
 	hex_content1 = content1
 	hex_content2 = content2
@@ -476,4 +476,4 @@
 		out.write(xor_result)
 	print(hex_content1 )
 
-  </details>
+</details>
