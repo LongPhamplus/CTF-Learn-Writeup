@@ -394,3 +394,50 @@
 ```
     python3 -c 'print("A"*80 + chr(0x02))' | ./blackbox
 ```
+
+## Bite-code
+- Với bài này thì điều đầu tiên cần làm là đọc hiểu code đã.
+- Giải thích sương sương thì đoạn mã chính sẽ là như này:
+```
+	0: iload_0     // Đẩy giá trị của tham số input (biến số 0) lên stack.
+	1: iconst_3    // Đẩy hằng số 3 lên stack.
+	2: ishl        // Dịch trái input 3 bit (tương đương nhân input với 2^3 = 8).
+	3: istore_1    // Lưu kết quả (input * 8) vào biến số 1.
+	
+	4: iload_0     // Đẩy lại giá trị của input lên stack.
+	5: ldc #2      // Đẩy giá trị hằng 525024598 lên stack.
+	7: ixor        // Thực hiện phép XOR giữa input và 525024598.
+	8: istore_2    // Lưu kết quả XOR vào biến số 2.
+	
+	9:  iload_1    // Đẩy giá trị biến 1 (input * 8) lên stack.
+	10: iload_2    // Đẩy giá trị biến 2 (kết quả XOR) lên stack.
+	11: ixor       // Thực hiện phép XOR giữa biến 1 và biến 2.
+	12: ldc #3     // Đẩy giá trị hằng -889275714 lên stack.
+	14: if_icmpne 21 // Nếu giá trị kết quả XOR ở bước trên KHÁC -889275714, nhảy tới offset 21.
+	17: iconst_1   // Đẩy giá trị `true` (1) lên stack.
+	18: goto 22    // Nhảy tới offset 22 (kết thúc hàm).
+	21: iconst_0   // Đẩy giá trị `false` (0) lên stack.
+	22: ireturn    // Trả về giá trị boolean từ stack.
+```
+- Đại loại là sẽ có giá trị input và sẽ có 1 hàm so sánh (input << 3) ^ input ^ 525024598 == -889275714. Dùng đoạn mã java dưới đây để dễ dàng cho ra kết quả.
+<details>
+	<summary>Đoạn mã tham khảo (java)</summary>
+
+ 	public class Main {
+	     public static boolean checkNum(int param) {
+	        int var1 = param << 3;
+	        int var2 = param ^ 525024598;
+	        return (var1 ^ var2) == -889275714;
+	    }
+	
+	    public static void main(String[] args) {
+	        // Thử nghiệm với một phạm vi số nguyên
+	        for (int i = Integer.MIN_VALUE; i < Integer.MAX_VALUE; i++) {
+	            if (checkNum(i)) {
+	                System.out.println("Tìm thấy số thỏa mãn: " + i);
+	                break;
+	            }
+	        }
+	    }
+	}
+</details>
