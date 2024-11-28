@@ -446,4 +446,8 @@
 - Sau khi tải file về thì strings ra chẳng có gì đặc biệt cả có chăng thì là dòng `congrats you found me! you win an iPad!` không có ý nghĩa gì cho lắm.
 - Thử dùng các các lấy lại dữ liệu kiểu foremost nhưng cũng không ra gì cả. Có khả năng cao là key ở ngay trong ảnh rồi.
 - Sử dụng một số công cụ thì ta có được key như sau: `zpv_tigqylhbafmeoesllpms`.
-  
+![BobbyToesIpad1](https://github.com/LongPhamplus/CTF-Learn-Writeup/blob/master/Part2_pic/BobbyToesIpad1.png)
+- Ròi giờ hết manh mối rồi ta sẽ phải đi kiểm tra lại code xem như nào. Dùng 1 vài công cụ để mở hexeditor lên thì thấy sau đoạn `congrats you found me! you win an iPad!` thì ta có 1 đoạn hex là `4A 46 49 46` thì đây chính là phần header của 1 file jpeg ta sẽ thử lấy đoạn hex từ đây xuống xem sao. À mà format của 1 file jpeg sẽ có 6 byte đầu là `FF D8 FF E0 00 10` rồi mới tới 4 byte kia tức là thêm 6 byte này vào đầu.
+- Ok giờ ta có 1 ảnh:
+- ![BobbyToesIpad2](https://github.com/LongPhamplus/CTF-Learn-Writeup/blob/master/Part2_pic/BobbyToesIpad2.jpg)
+- Lấy xâu bên trong ảnh xor với key bên trên là ra flag.
