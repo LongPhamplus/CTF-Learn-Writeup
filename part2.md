@@ -463,7 +463,7 @@
 	<summary>Đoạn mã tham khảo (python)</summary>
 
 	with open('CTFLearn.pdf', 'rb') as file1:
-	content1 = file1.read()
+		content1 = file1.read()
 	with open('CTFLearn.txt', 'rb') as file2:
 		content2 = file2.read()
 	
