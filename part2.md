@@ -477,3 +477,10 @@
 	print(hex_content1 )
 
 </details>
+
+## Get Into Command Mission
+- Mịa đọc cmt lừa vl.
+- Ở bài này khi mà kiểm tra trong phần strings thì sẽ thấy được có 1 phân gợi ý `data:image/png;base64` tức là đoạn kí tự sau đó sẽ là 1 đoạn hex bị encode bởi base64 của 1 file png giờ chỉ cần decode từ base63 ra chuyển qua hex rồi render ảnh là xong.
+  ![Get Into Command Mission1](https://github.com/LongPhamplus/CTF-Learn-Writeup/blob/master/Part2_pic/Get%20Into%20Command%20Mission1.png)
+
+  
