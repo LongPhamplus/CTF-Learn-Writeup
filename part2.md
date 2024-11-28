@@ -441,3 +441,9 @@
 	    }
 	}
 </details>
+
+## Bobby Toe's iPad
+- Sau khi tải file về thì strings ra chẳng có gì đặc biệt cả có chăng thì là dòng `congrats you found me! you win an iPad!` không có ý nghĩa gì cho lắm.
+- Thử dùng các các lấy lại dữ liệu kiểu foremost nhưng cũng không ra gì cả. Có khả năng cao là key ở ngay trong ảnh rồi.
+- Sử dụng một số công cụ thì ta có được key như sau: `zpv_tigqylhbafmeoesllpms`.
+  
