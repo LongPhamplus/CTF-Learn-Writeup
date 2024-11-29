@@ -522,3 +522,40 @@
 	result_image.show()
 
 </details>
+
+## Rangoon
+- Ok bài này như các bài Reversing trước đó đã từng làm đều cần chạy code ròi đọc mã nguồn thôi đơn giản :P.
+- OK giờ thì chạy thử với input linh tinh xem sao:
+```
+	┌──(kali㉿kali)-[~/Downloads/_Rangoon.zip.extracted]
+	└─$ ./Rangoon HEHEHEHEHE    
+	CTFLearn Reversing Challenge: Rangoon
+	
+	Compile Options: ${CMAKE_CXX_FLAGS} -O0 -fno-stack-protector -mno-sse
+	You entered the wrong flag :-(
+```
+- Đọc code sương sương trước cái đã cứ mở ghidra lên mà xem thôi.
+- OK đã hiểu qua qua giờ thì mở gdb lên và chạy nào mình sẽ set break point tại `*main+0x5d` vì sau khi xem mã nguồn dạng asm thì đây là địa chỉ mà dòng `Compile Options: ${CMAKE_CXX_FLAGS} -O0 -fno-stack-protector -mno-sse` được in ra.
+- Rồi giờ mình run với input `HEHEHEHEHEHEHE` thì thấy được là sẽ cần phải nhập 1 xâu bắt đầu là `CTFlearn{.....` ok rồi thử với input này xem sao.
+- Và sau khi chạy gdb kha khá thì mình nhận được 1 chuỗi là `CTFlearn{Prince_Princess_Thaketa}` trông có vẻ giống flag nhập thử xem sao.
+- Ok sai rồi :)).
+- Giờ mình cần đọc code kĩ một tí thì ở main sẽ có 1 đoạn mã như này:
+```
+        lVar9 = strings;*(undefined2 *)((long)&buffer + uVar10 + 7) = 0x7b;
+	lVar7 = __stpcpy_chk((long)&DAT_001040e8 + uVar10,*(undefined8 *)(lVar9 + (ulong)((bVar2 == 0x5f) + 2) * 8),(long)puVar12 - ((long)&DAT_001040e8 + uVar10));
+	lVar7 = __memcpy_chk(lVar7,&DAT_0010200e,2,(long)puVar12 - lVar7);
+	lVar7 = __stpcpy_chk(lVar7 + 1,*(undefined8 *)(lVar9 + ((ulong)(bVar3 == 0x5f) * 5 + 3) * 8),(long)&DAT_001041df - lVar7);
+	lVar7 = __memcpy_chk(lVar7,&DAT_0010200e,2,(long)puVar12 - lVar7);
+	lVar9 = __stpcpy_chk(lVar7 + 1,*(undefined8 *)(lVar9 + ((ulong)(sVar6 == 0x1c) * 3 + 9) * 8),(long)&DAT_001041df - lVar7);
+	lVar9 = __memcpy_chk(lVar9,"}",2,(long)puVar12 - lVar9);
+```
+- Theo mình hiểu thì đại loại đoạn mã này sẽ kiểm tra giá trị bVar2, bVar3 và sVar6 xem có thỏa mãn với các giá trị trong đoạn mã hay không rồi cái giá trị so sánh đó sẽ ảnh hưởng tới cái giá trị được in ra màn hình.
+- Với các giá trị `bVar2 = __s[0x11];`, `bVar3 = __s[0x16];` và `sVar6 = strlen((char *)__s);`.
+- Ở đây __s là giá trị input thôi nếu mình không nhầm :)).
+- Rồi thì giải thích sương sương đoạn mã này muốn là input sẽ có độ dài là 28 và có 2 kí tự `'_'` ở bị trí 17 và 22, xâu bắt đầu từ 0 và khi chạy đoạn mã thì sẽ lấy ra các giá trị tương ứng khi `'_'` được đặt đúng chỗ.
+- Để đỡ phải suy nghĩ nhiều như mình thì mọi người có thể thử làm 1 cái trick lỏd đấy là mở gdb lên set break point và chạy:
+```
+	run CTFlearn{__________________}
+```
+- Và sau khi chạy thì chương trình sẽ cho ta 1 giá trị để check với input đó là `CTFlearn{Princess_Maha_Devi}` và đó chính là flag.
+
