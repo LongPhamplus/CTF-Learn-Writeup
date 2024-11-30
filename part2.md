@@ -649,3 +649,26 @@
 
 
 </details>
+
+## Ramada
+- Với bài Reverse Engineering như này thì chỉ cần ghidra với gdb thôi.
+- Mở ghidra lên thì thấy là input cần nhập với độ dài là 31, bắt đầu bằng `CTFlearn{` và kết thúc bằng `}`.
+- Đọc kĩ thì thấy giá trị trong {_input} sẽ yêu cầu _input[i]^3 = data[i] với data sẽ được tìm thấy ở phần `InitData` như hình
+  ![Ramada1](https://github.com/LongPhamplus/CTF-Learn-Writeup/blob/master/Part2_pic/Ramada1.png)
+- Chú ý là giá trị _Dat_00104090 bị đặt ngược đúng ra nó phải ở dưới cùng mới đúng vì 50 -> 60 -> 70 -> 80 -> 90 mà ._.
+- Ròi giờ chuyển hex qua dec rồi cho về char là ra được giá trị _input.
+<details>
+	<summary>Đoạn mã tham khảo (python)</summary>
+
+ 	import numpy as np
+
+	hex_arr = ['13693', '6b2c0', '11a9f9', '157000', "1cb91", "1bb528", "1bb528", "ded21", "144f38",
+	    "fb89d", "169b48", "d151f", "8b98b", "17d140",
+	    "ded21", "1338c0", "1338c0", "11a9f9", "1b000",
+	    "144f38", '1734eb']
+	dec_arr = []
+	for i in hex_arr:
+	    dec_arr.append(int(i, 16))
+	for i in dec_arr:
+	    print(chr(int(np.cbrt(i))), end='')
+</details> 
