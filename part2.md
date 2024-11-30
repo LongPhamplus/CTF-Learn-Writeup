@@ -672,3 +672,35 @@
 	for i in dec_arr:
 	    print(chr(int(np.cbrt(i))), end='')
 </details> 
+
+
+## We want Nudes instead of Nukes
+- Trước khi giải bài này thì cần đọ qua về mã hóa AES-CBC là gì đã.
+- Vào vấn đề chính thì ta sẽ cần thay đổi vector iv để bản mã khi giải mã ra bản rõ sẽ thay vì thả bom thì sẽ send nude :D.
+- Như đã biết thì hệ sẽ được mã hóa như sau:
+  ```
+  	c[i] = m[i] ^ iv[i]
+  => 	iv[i] = c[i] ^ m[i]
+  Mà	fake_m[i] = c[i] ^ fake_iv[i]
+  =>	fake_iv[i] = iv[i] ^ m[i] ^ fake_m[i]
+  
+  ```
+<details>
+	<summary>Đoạn mã tham khảo (python)</summary>
+
+ 	c = "8473dcb86bc12c6b6087619c00b6657e"
+	iv = "391e95a15847cfd95ecee8f7fe7efd66"
+	fake_m = "SEND_NUDES_MELA!"
+	m = "FIRE_NUKES_MELA!"
+	
+	m_byte_data = m.encode('utf-8')
+	m_hex = m_byte_data.hex()
+	fake_m_byte_data = fake_m.encode('utf-8')
+	fake_m_hex = fake_m_byte_data.hex()
+	
+	fake_iv = ""
+	for i in range(len(m_hex)):
+	    fake_iv += format(int(iv[i], 16) ^ int(m_hex[i], 16) ^ int(fake_m_hex[i], 16), 'x')
+	print(fake_iv)
+
+</details>
