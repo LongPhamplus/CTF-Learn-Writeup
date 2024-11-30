@@ -605,3 +605,47 @@
 </details>
 
 ## Programming a language
+- Mình đã tạo ra 1 đoạn mã để thực hiện các yêu cầu của bài và ở đây chỉ cần cho input = 0 thì sẽ có flag rồi.
+<details>
+	<summary>Đoạn mã tham khảo (python)</summary>
+
+	def process_instructions(instructions, stack):
+    for command in instructions:
+        if command == "-":
+            if stack:
+                stack[-1] -= 1
+        elif command == "+":
+            if stack:
+                stack[-1] += 1
+        elif command == ">":
+            if stack:
+                stack.append(stack.pop(0))
+        elif command == "<":
+            if stack:
+                stack.insert(0, stack.pop())
+        elif command == "@":
+            if len(stack) >= 2:
+                stack[-1], stack[-2] = stack[-2], stack[-1]
+        elif command == ".":
+            if stack:
+                stack.append(stack[-1])
+        elif command == "€":
+            s = "".join(chr(x) for x in stack)
+            return s
+        else:
+            print(f"Unknown command: {command}")
+    return stack
+	
+	# Khởi tạo stack ban đầu
+	stack = [0] 
+	
+	# Chuỗi lệnh cần thực hiện
+	instructions = "++++++++++++++++++++++++++++++++++++++++++++++++.++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++.++.----------->@>>.<@<<<.@<@<@<++++<.<@<@<<@<-----.<<<<<.<@<@<+<.+>@.-------.-------->>>.<@<@<++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++.++>>>.<@<@<<.-----------<.>@>@<@><<.>@>@++++<.>@-----.>>>.<@<@<+<.>@+.-------.--------.+++++++++++++>>>>>>.<@<@<@<@<@<<.>@++.-------<.>@+++++++<<<.>@>@>@<<.>@>@<.>@-<.>@++++++++++++<<<.>@>@>@+++++++++++€"
+	
+	# Xử lý chuỗi lệnh
+	stack = process_instructions(instructions, stack)
+	
+	print("CTFlearn{" + stack + "}")
+
+
+</details>
