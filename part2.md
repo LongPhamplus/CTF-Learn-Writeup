@@ -563,3 +563,10 @@
 ```
 - Và sau khi chạy thì chương trình sẽ cho ta 1 giá trị để check với input đó là `CTFlearn{Princess_Maha_Devi}` và đó chính là flag.
 
+## Polycrypto
+- Chỉ cần đọc những gì mà đề cho là đủ để giải bài này rồi.
+<details>
+	<summary>Đoạn mã tham khảo (python)</summary>
+
+  	
+</details>
