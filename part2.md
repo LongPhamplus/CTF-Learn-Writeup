@@ -704,3 +704,109 @@
 	print(fake_iv)
 
 </details>
+
+## ShahOfGimli 
+- Sau khi strings thì ta nhận được 1 đoạn kí tự khác lạ, lấy đoạn đầu tiên đem đi base64 thì được 1 đoạn như này:
+```
+	Q1RGbGVhcm57R2ltbGkuSXMuQS5Ed2FyZn0KCldobyBpcyBHaW1saT8gIFlvdSBjYW4gbGVhcm4g
+	bW9yZSBhYm91dCBHaW1saSBoZXJlOgpodHRwczovL2xvdHIuZmFuZG9tLmNvbS93aWtpL0dpbWxp
+	Cmh0dHBzOi8vZW4ud2lraXBlZGlhLm9yZy93aWtpL0dpbWxpXyhNaWRkbGUtZWFydGgpCgpUaGlz
+	IGNoYWxsZW5nZSBpcyBiYXNlZCBvbiBoYXNoIGFsZ29yaXRobXMgYW5kIGVuY3J5cHRpb24uCgpJ
+	IGFtIHVzaW5nIE9QRU5TU0wgdjEuMS4xIHRvIGNyZWF0ZSB0aGlzIGNoYWxsZW5nZS4KCkhlcmUg
+	aXMgYSByZWZlcmVuY2UgZm9yIHVzaW5nIGhhc2ggY2FsY3VsYXRpb25zIHdpdGggT1BFTlNTTDoK
+	aHR0cHM6Ly93d3cub3BlbnNzbC5vcmcvZG9jcy9tYW4xLjEuMS9tYW4xL29wZW5zc2wtZGdzdC5o
+	dG1sCgpJZiB5b3UgYXJlIGEgUHl0aG9uIGNvZGVyLCBQeXRob24gcHJvdmlkZXMgYSBoYXNoaW5n
+	IGxpYnJhcnkgeW91IG1pZ2h0IGZpbmQgdXNlZnVsOgpodHRwczovL2RvY3MucHl0aG9uLm9yZy8z
+	L2xpYnJhcnkvaGFzaGxpYi5odG1sCgpJZiB0aGlzIGNoYWxsZW5nZSBoYXMgeW91IHdvbmRlcmlu
+	ZyB3aGF0IHRvIGRvIG5leHQsIHBsZWFzZSB0cnkgbXkgb3RoZXIgY2hhbGxlbmdlcwp0aGF0IGFy
+	ZSB3b3J0aCBmZXdlciBwb2ludHMuICBUaGUgbW9yZSBwb2ludHMsIHRoZSBtb3JlIGRpZmZpY3Vs
+	dCB0aGUgY2hhbGxlbmdlLgoKSWYgeW91IGFyZSBuZXcgdG8gQ1RGIGFuZC9vciBub3QgcXVpdGUg
+	c3VyZSBob3cgdG8gc29sdmUgdGhpcyBjaGFsbGVuZ2UsCnlvdSBzaG91bGQgcHJvYmFibHkgdHJ5
+	IHRoZXNlIG90aGVyIGNoYWxsZW5nZXMgZmlyc3QgaW4gdGhpcyBvcmRlcjoKUnViYmVyRHVjawpT
+	bm93Ym9hcmQKUGlrZXNQZWFrCkdhbmRhbGZUaGVXaXNlCgpBZnRlciBzb2x2aW5nIHRoaXMgU2hh
+	aE9mR2ltbGkgY2hhbGxlbmdlLCB0aGVuIHRyeToKSGFpbENhZXNhcgpNb3VudGFpbk1hbgpLZXlN
+	YWtlcgpWYXJnYXNJc2xhbmQKCk15IFR3aXR0ZXIgRE0ncyBhcmUgb3BlbiBAa2Nib3dodW50ZXIu
+	CgotLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tCgpUaGUgdGhpcmQgY29tbWVudCBibG9jayBp
+	cyBlbmNyeXB0ZWQgd2l0aCBBRVMgQ0JDIGVuY3J5cHRpb24gdXNpbmcgdGhlIGZvbGxvd2luZyBr
+	ZXk6CnNoYTI1NiBoYXNoIG9mIHRoZSBzdHJpbmcgIkNURmxlYXJuIgoKTm90ZSB0aGF0IHRoZSBj
+	b21tZW50IGJsb2NrIGlzIGFsc28gYmFzZTY0IGVuY29kZWQKVGhlcmUgaXMgbm8gaXYgYnV0IHlv
+	dSBuZWVkIHRvIGRldGVybWluZSBob3cgdG8gZXhwcmVzcyB0aGlzIG1hdGhlbWF0aWNhbGx5CgpJ
+	ZiB5b3UgYXJlIG5ldyB0byBlbmNyeXB0aW9uIGFuZCBoYXNoIGFsZ29yaXRobXMgaGVyZSBpcyBh
+	IGdvb2QgcGxhY2UgdG8gc3RhcnQ6Cm9wZW5zc2wgZW5jIC1oZWxwCm9wZW5zc2wgZGdzdCAtaGVs
+	cApzaGEyNTZzdW0KCk9mIGNvdXJzZSBHb29nbGUgaXMgeW91ciBmcmllbmQgKGlmIHlvdSBkb24n
+	dCBtaW5kIHRoZW0gcmVjb3JkaW5nIGFsbCB5b3VyIG9ubGluZSBhY3Rpdml0eSkKCmh0dHBzOi8v
+	d2lraS5vcGVuc3NsLm9yZy9pbmRleC5waHAvRW5jIGlzIGEgZ29vZCByZWZlcmVuY2UgZm9yIG9w
+	ZW5zc2wgZW5jcnlwdGlvbiBhbGdvcml0aG1zCmh0dHBzOi8vZG9jcy5weXRob24ub3JnLzMvbGli
+	cmFyeS9oYXNobGliLmh0bWwKCgoKCgoKCgo=
+```
+- Ta được:
+```
+	CTFlearn{Gimli.Is.A.Dwarf}
+	
+	Who is Gimli?  You can learn more about Gimli here:
+	https://lotr.fandom.com/wiki/Gimli
+	https://en.wikipedia.org/wiki/Gimli_(Middle-earth)
+	
+	This challenge is based on hash algorithms and encryption.
+	
+	I am using OPENSSL v1.1.1 to create this challenge.
+	
+	Here is a reference for using hash calculations with OPENSSL:
+	https://www.openssl.org/docs/man1.1.1/man1/openssl-dgst.html
+	
+	If you are a Python coder, Python provides a hashing library you might find useful:
+	https://docs.python.org/3/library/hashlib.html
+	
+	If this challenge has you wondering what to do next, please try my other challenges
+	that are worth fewer points.  The more points, the more difficult the challenge.
+	
+	If you are new to CTF and/or not quite sure how to solve this challenge,
+	you should probably try these other challenges first in this order:
+	RubberDuck
+	Snowboard
+	PikesPeak
+	GandalfTheWise
+	
+	After solving this ShahOfGimli challenge, then try:
+	HailCaesar
+	MountainMan
+	KeyMaker
+	VargasIsland
+	
+	My Twitter DM's are open @kcbowhunter.
+	
+	----------------------------
+	
+	The third comment block is encrypted with AES CBC encryption using the following key:
+	sha256 hash of the string "CTFlearn"
+	
+	Note that the comment block is also base64 encoded
+	There is no iv but you need to determine how to express this mathematically
+	
+	If you are new to encryption and hash algorithms here is a good place to start:
+	openssl enc -help
+	openssl dgst -help
+	sha256sum
+	
+	Of course Google is your friend (if you don't mind them recording all your online activity)
+	
+	https://wiki.openssl.org/index.php/Enc is a good reference for openssl encryption algorithms
+	https://docs.python.org/3/library/hashlib.html
+```
+- Ok giờ ta biết được mình sẽ phải tìm ra key bằng cách hash `CTFlearn` và được đoạn `b18ef1351fc0df641abbe56dcd4928a8bb98452b1b43d8c1c13f1874c8b35056`.
+- Tiếp theo thì ta sẽ có thêm 1 gợi ý là `Note that the comment block is also base64 encoded` thì tức là phần comment thứ 3 sẽ là 1 cái gì đó được mã hóa bằng base64 và aes với key là cái mà mình vừa nói ở trên rồi giờ cho vào cyberchef xem như nào.
+```
+	TZm1GWpQfUB+7cM2BIng5MCeEgBqxIKunpThaVKemNBmvbis9H0rTAOSIYXsu8va
+	CK6Z67gNHOQYBPUNl1mY6jWVLfq+5FmUtaW/lnYT71rBlmPcBLymDGFj2BJjZWY4
+	A3aM2Mp0AGDPrK3X4eMu8Q==
+```
+- Sau khi giải mã thì ta được như sau:
+![ShahOfGimli1](https://github.com/LongPhamplus/CTF-Learn-Writeup/blob/master/Part2_pic/ShahOfGimli1.png)
+- Rồi giờ k biết làm gì tiếp :)).
+- Nếu mà để ý thì mình vẫn có thể binwalk file ảnh ra thành 1 file zip nữa tên là 20517, unzip ra thì được 1 file .enc và 1 file ảnh khác.
+- Với gợi ý vừa tìm được bên trên thì ta có cái gì gì đó là key, cái gì gì đó liên quan tới sha256 và câu trả lời ở đây chính là file ảnh vừa được tìm ra ở trên.
+  ![ShahOfGimli2](https://github.com/LongPhamplus/CTF-Learn-Writeup/blob/master/Part2_pic/ShahOfGimli2.png)
+- Ok giờ ta đã có key và iv rồi (hint bảo ko có iv tức là iv là 1 chuỗi 0 có độ dài 16 byte).
+```
+	openssl enc -d -aes-256-cbc -iv 00000000000000000000000000000000 -K $(cat key) -in flag.enc -out flag  
+```
