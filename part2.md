@@ -866,3 +866,8 @@
 	resized_image = image.resize((250, 250), Image.NEAREST)
 	print(scan(resized_image), scan_fix(resized_image))
 </details>
+
+## Combo Safe-box
+- Với bài này thì chẳng cần bóc mẽ cái file ra làm gì bật trình chiếu lên mà quất thôi.
+- Sau một hồi nghịch thì mình chả hiểu gì cả :)).
+- Vấn đề ở đây là đường đến trang đích 14. Có thể thay số của các nút từng trang là giá trị trang sẽ nhảy tới rồi tìm xem là trang 14 sẽ cần tới từ trang nào rồi cứ đi lùi lại là ra.
