@@ -810,3 +810,59 @@
 ```
 	openssl enc -d -aes-256-cbc -iv 00000000000000000000000000000000 -K $(cat key) -in flag.enc -out flag  
 ```
+
+## QR-code inception
+- Mở ảnh lên quét thì ta sẽ được thông tin là : `GET A CLOSER LOOK AT ME`.
+- Ok nhìn gần hơn thì ta thấy có rất nhiều mã qr nhỏ tí bên trong ảnh. Giờ chỉ cần quét hết tất cả các mã nhỏ là ta sẽ ra 1 cái gì đó :))
+- Nôm na là sau khi quét ta sẽ được 1 đoạn như sau:
+```
+	CTFlearn is a dream. Is Cobb still dreaming? I hope you scripted the retrieval of this message because "we need to go deeper"... iVBORw0KGgoAAAANSUhEUgAAACUAAAAlAQAAAADt5R2uAAAAsUlEQVR4nGP4DwQ/GDDJD9IGDhUM369x3q9g+BJgdBFIRvQEAsnwKUD290uzgOIfREOBav5/jgSq/3T2sQtQb865mgqGn46fGn4wfLE/eqaC4VN/1jkgmVFdBdR7sripguGPMrfeD4ZvUhO1fjD8+P73JlAl58YDQPEfGxf/YPjuFcQINPOLSRHQDULCQUCRG6olQL0xh9lBLpkXAVQfM6sU6IYrr78B1Yga2mFzP5gEAB2SgeETXS+JAAAAAElFTkSuQmCC
+```
+- Ròi giờ decode chuỗi kia bằng base64 thì ta sẽ được 1 cái đoạn mã của 1 file png và chuyển qua ảnh thì ta sẽ được 1 cái qr khác :)).
+- Quét QR thì ta sẽ có flag thôi chịu khó ngồi quét tí :Đ.
+- Còn lười thì có thể tham khảo đoạn mã dưới đây (bạn nghĩ mình ngồi quét tay đống mã kia á ?)
+<details>
+	<summary>Đoạn mã tham khảo (python)</summary>
+
+ 	from PIL import Image
+	import numpy as np
+	from pyzbar.pyzbar import decode
+	import base64
+	import binascii
+	from io import BytesIO
+	
+	def scan_fix(image):
+	    grayscale_image = image.convert('L')
+	    inverted_image = Image.eval(grayscale_image, lambda x: 255 - x)
+	    decoded_objects = decode(inverted_image)
+	    for obj in decoded_objects:
+	        return obj.data.decode('utf-8')
+	    return ""
+	
+	def scan(image):
+	    decoded_objects = decode(image)
+	    for obj in decoded_objects:
+	        return obj.data.decode('utf-8')
+	    return ""
+	image = Image.open("inception.png")
+	output = ''
+	pixel_arr = np.array(image)
+	big_qrcode = pixel_arr[1200:7500, 1200:7500]
+	for i in range(0, 21):
+	    for j in range(0, 21):
+	        line_arr = big_qrcode[i * 300:(i + 1) * 300, j * 300:(j + 1) * 300]
+	        small_qrcode = line_arr[139:160, 139:160]
+	        cropped_image = Image.fromarray(small_qrcode)
+	        resized_image = cropped_image.resize((250, 250), Image.NEAREST)
+	        output += scan_fix(resized_image)
+	        output += scan(resized_image)
+	
+	encoded_string = output[129:]
+	decoded_bytes = base64.b64decode(encoded_string)
+	decoded_string = binascii.hexlify(decoded_bytes).decode('utf-8')
+	
+	binary_data = binascii.unhexlify(decoded_string)
+	image = Image.open(BytesIO(binary_data))
+	resized_image = image.resize((250, 250), Image.NEAREST)
+	print(scan(resized_image), scan_fix(resized_image))
+</details>
